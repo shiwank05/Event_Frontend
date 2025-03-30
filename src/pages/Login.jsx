@@ -34,7 +34,6 @@ const Login = () => {
 
       // Navigate based on role
       navigate("/");
-
     } catch (err) {
       console.error("Login Error:", err.message);
       setError(err.message);
@@ -44,12 +43,12 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-black">
-      <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-96 border border-gray-800">
-        <h2 className="text-3xl font-bold text-center mb-8 text-white">Sign In</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gray-900 text-gray-200">
+      <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-96 border border-gray-700">
+        <h2 className="text-3xl font-bold text-center mb-6 text-blue-400">Sign In</h2>
 
         {error && (
-          <div className="bg-red-900 border-l-4 border-red-500 text-white px-4 py-3 rounded mb-6">
+          <div className="bg-red-900/80 border-l-4 border-red-500 text-white px-4 py-3 rounded mb-6 shadow-md">
             {error}
           </div>
         )}
@@ -62,32 +61,34 @@ const Login = () => {
             <input
               id="email"
               type="email"
-              className="bg-gray-800 border border-gray-700 text-white rounded w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-gray-700 border border-gray-600 text-white rounded w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow shadow-md"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
             />
+
           </div>
 
-          <div className="mb-8">
+          <div className="mb-6">
             <label className="block text-blue-400 text-sm font-medium mb-2" htmlFor="password">
               Password
             </label>
             <input
               id="password"
               type="password"
-              className="bg-gray-800 border border-gray-700 text-white rounded w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-gray-700 border border-gray-600 text-white rounded w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow shadow-md"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
             />
+
           </div>
 
           <button
             type="submit"
-            className="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded w-full transition duration-200"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded w-full transition duration-300 shadow-md hover:shadow-blue-500/50"
             disabled={isLoading}
           >
             {isLoading ? "Signing in..." : "Sign In"}

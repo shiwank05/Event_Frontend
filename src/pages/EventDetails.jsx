@@ -258,7 +258,7 @@ const EventDetails = () => {
 
                     <div className="grid grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-1">Year</label>
+                        <label className="block text-sm font-medium text-gray-400 mb-1">Semester</label>
                         <input
                           type="text"
                           name="year"
@@ -278,7 +278,7 @@ const EventDetails = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-1">Team</label>
+                        <label className="block text-sm font-medium text-gray-400 mb-1">Team Name</label>
                         <input
                           type="text"
                           name="teamName"

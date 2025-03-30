@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 
 const EventCard = ({ event }) => {
   return (
-    <div className="bg-gray-900 text-white p-5 rounded-xl shadow-lg h-full flex flex-col transform transition-all duration-300 hover:scale-105 hover:shadow-2xl border border-gray-800">
+    <div className="bg-gray-800 text-gray-200 p-5 rounded-xl shadow-lg h-full flex flex-col transform transition-all duration-300 hover:scale-105 hover:shadow-blue-900/20 border border-gray-700">
       <div className="overflow-hidden rounded-lg mb-4 w-full h-64 relative">
         <img 
           src={event.image} 
           alt={event.name} 
           className="w-full h-full object-cover rounded-lg transition-transform duration-500 hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
       </div>
       <h3 className="text-xl font-bold text-center mb-2 transition-colors duration-300 hover:text-blue-400">
         {event.name}
@@ -64,16 +63,16 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-black text-white">
-        <div className="loader"></div>
+      <div className="flex justify-center items-center h-screen bg-gray-900 text-gray-200">
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 bg-black min-h-screen text-white">
+    <div className="p-6 bg-gray-900 min-h-screen text-gray-200">
       <h2 className="text-4xl font-bold mb-8 text-center">
-        Upcoming <span className="text-blue-500">Events</span>
+        Upcoming <span className="text-blue-400">Events</span>
       </h2>
 
       {events.length === 0 ? (
