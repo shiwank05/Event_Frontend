@@ -12,11 +12,11 @@ const Navbar = () => {
   useEffect(() => {
     checkAuthStatus();
   }, [location.pathname]);
-  
+
   const checkAuthStatus = () => {
     const token = localStorage.getItem("token");
     const userStr = localStorage.getItem("currentUser");
-    
+
     if (token && userStr) {
       try {
         const user = JSON.parse(userStr);
@@ -45,9 +45,14 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-gray-800/70 backdrop-blur-md text-white p-4 flex justify-between items-center h-16">
-      <Link to="/" className="text-xl font-bold hover:text-gray-300 transition-colors">
-        CSI-SRM
+      <Link to="/">
+        <img
+          src="https://csiportal-eight.vercel.app/csip.jpg"
+          alt="CSI Logo"
+          className="h-10 w-auto"
+        />
       </Link>
+
 
       <div className="space-x-4 flex items-center">
         <Link to="/" className="hover:text-gray-300 transition-colors">Home</Link>
@@ -63,11 +68,11 @@ const Navbar = () => {
                 Dashboard
               </Link>
             )}
-            
+
             <div className="flex items-center">
               <span className="text-gray-300 mr-3">Hello, {userName}</span>
-              <button 
-                onClick={handleLogout} 
+              <button
+                onClick={handleLogout}
                 className="bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition-colors"
               >
                 Logout
