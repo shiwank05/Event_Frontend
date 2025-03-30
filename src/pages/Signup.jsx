@@ -13,7 +13,7 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,22 +62,22 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-semibold text-center mb-6">
-          Create an Account
+    <div className="flex justify-center items-center min-h-screen bg-black">
+      <div className="bg-gray-900 p-5 rounded-lg shadow-lg w-96 border border-gray-800">
+        <h2 className="text-2xl font-bold text-center mb-4 text-white">
+          Create Account
         </h2>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-900 border-l-4 border-red-500 text-white px-3 py-2 rounded mb-3 text-sm">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-3">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-blue-400 text-xs font-medium mb-1"
               htmlFor="fullName"
             >
               Full Name
@@ -86,16 +86,17 @@ const Signup = () => {
               id="fullName"
               name="fullName"
               type="text"
-              className="border rounded w-full py-2 px-3"
+              className="bg-gray-800 border border-gray-700 text-white rounded w-full py-2 px-3 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
               value={formData.fullName}
               onChange={handleChange}
+              placeholder="Enter your full name"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-3">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-blue-400 text-xs font-medium mb-1"
               htmlFor="email"
             >
               Email
@@ -104,16 +105,17 @@ const Signup = () => {
               id="email"
               name="email"
               type="email"
-              className="border rounded w-full py-2 px-3"
+              className="bg-gray-800 border border-gray-700 text-white rounded w-full py-2 px-3 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
               value={formData.email}
               onChange={handleChange}
+              placeholder="Enter your email"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-3">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-blue-400 text-xs font-medium mb-1"
               htmlFor="password"
             >
               Password
@@ -122,16 +124,17 @@ const Signup = () => {
               id="password"
               name="password"
               type="password"
-              className="border rounded w-full py-2 px-3"
+              className="bg-gray-800 border border-gray-700 text-white rounded w-full py-2 px-3 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
               value={formData.password}
               onChange={handleChange}
+              placeholder="••••••••"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-3">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-blue-400 text-xs font-medium mb-1"
               htmlFor="role"
             >
               Role
@@ -139,7 +142,7 @@ const Signup = () => {
             <select
               id="role"
               name="role"
-              className="border rounded w-full py-2 px-3"
+              className="bg-gray-800 border border-gray-700 text-white rounded w-full py-2 px-3 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
               value={formData.role}
               onChange={handleChange}
             >
@@ -149,9 +152,9 @@ const Signup = () => {
           </div>
 
           {formData.role === "admin" && (
-            <div className="mb-4">
+            <div className="mb-3">
               <label
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="block text-blue-400 text-xs font-medium mb-1"
                 htmlFor="adminKey"
               >
                 Admin Secret Key
@@ -160,9 +163,10 @@ const Signup = () => {
                 id="adminKey"
                 name="adminKey"
                 type="password"
-                className="border rounded w-full py-2 px-3"
+                className="bg-gray-800 border border-gray-700 text-white rounded w-full py-2 px-3 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
                 value={formData.adminKey}
                 onChange={handleChange}
+                placeholder="Enter admin key"
                 required
               />
             </div>
@@ -170,17 +174,17 @@ const Signup = () => {
 
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded w-full transition duration-200 text-sm mt-2"
             disabled={isLoading}
           >
-            {isLoading ? "Signing up..." : "Sign Up"}
+            {isLoading ? "Creating account..." : "Create Account"}
           </button>
         </form>
 
-        <p className="text-center mt-4">
+        <p className="text-center mt-3 text-gray-400 text-xs">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-500">
-            Login
+          <Link to="/login" className="text-blue-400 hover:text-blue-300">
+            Sign In
           </Link>
         </p>
       </div>

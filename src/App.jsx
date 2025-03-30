@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -7,10 +8,22 @@ import EventDetails from "./pages/EventDetails";
 import Dashboard from "./pages/Dashboard";
 import AdminPanel from "./pages/AdminPanel";
 
+// ScrollToTop component to ensure pages start from the top
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  
+  return null;
+};
+
 const App = () => (
   <Router>
+    <ScrollToTop />
     <Navbar />
-    <div className="pt-16">
+    <div className="pt-16 min-h-screen bg-black">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

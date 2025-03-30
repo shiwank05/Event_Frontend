@@ -8,7 +8,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -44,56 +44,58 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+    <div className="flex justify-center items-center min-h-screen bg-black">
+      <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-96 border border-gray-800">
+        <h2 className="text-3xl font-bold text-center mb-8 text-white">Sign In</h2>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <div className="bg-red-900 border-l-4 border-red-500 text-white px-4 py-3 rounded mb-6">
             {error}
           </div>
         )}
 
         <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+          <div className="mb-6">
+            <label className="block text-blue-400 text-sm font-medium mb-2" htmlFor="email">
               Email
             </label>
             <input
               id="email"
               type="email"
-              className="border rounded w-full py-2 px-3"
+              className="bg-gray-800 border border-gray-700 text-white rounded w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
               required
             />
           </div>
 
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+          <div className="mb-8">
+            <label className="block text-blue-400 text-sm font-medium mb-2" htmlFor="password">
               Password
             </label>
             <input
               id="password"
               type="password"
-              className="border rounded w-full py-2 px-3"
+              className="bg-gray-800 border border-gray-700 text-white rounded w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+            className="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded w-full transition duration-200"
             disabled={isLoading}
           >
-            {isLoading ? "Logging in..." : "Login"}
+            {isLoading ? "Signing in..." : "Sign In"}
           </button>
         </form>
 
-        <p className="text-center mt-4">
-          Don't have an account? <Link to="/signup" className="text-blue-500">Sign up</Link>
+        <p className="text-center mt-6 text-gray-400">
+          Don't have an account? <Link to="/signup" className="text-blue-400 hover:text-blue-300">Create account</Link>
         </p>
       </div>
     </div>
