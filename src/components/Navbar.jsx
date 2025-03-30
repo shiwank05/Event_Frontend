@@ -40,13 +40,14 @@ const Navbar = () => {
     localStorage.removeItem("currentUser");
     setIsLoggedIn(false);
     setIsAdmin(false);
+    setMenuOpen(false);
     navigate("/login");
   };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-gray-800/70 backdrop-blur-md text-white p-4 flex justify-between items-center h-16">
       {/* Logo */}
-      <Link to="/">
+      <Link to="/" onClick={() => setMenuOpen(false)}>
         <img
           src="https://csiportal-eight.vercel.app/csip.jpg"
           alt="CSI Logo"
@@ -68,16 +69,18 @@ const Navbar = () => {
           menuOpen ? "translate-x-0" : "translate-x-full md:translate-x-0"
         }`}
       >
-        <Link to="/" className="block md:inline py-2 px-4 hover:text-gray-300">Home</Link>
+        <Link to="/" onClick={() => setMenuOpen(false)} className="block md:inline py-2 px-4 hover:text-gray-300">
+          Home
+        </Link>
 
         {isLoggedIn ? (
           <>
             {isAdmin ? (
-              <Link to="/admin-dashboard" className="block md:inline py-2 px-4 hover:text-gray-300">
+              <Link to="/admin-dashboard" onClick={() => setMenuOpen(false)} className="block md:inline py-2 px-4 hover:text-gray-300">
                 Admin Panel
               </Link>
             ) : (
-              <Link to="/user-dashboard" className="block md:inline py-2 px-4 hover:text-gray-300">
+              <Link to="/user-dashboard" onClick={() => setMenuOpen(false)} className="block md:inline py-2 px-4 hover:text-gray-300">
                 Dashboard
               </Link>
             )}
@@ -94,10 +97,10 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <Link to="/login" className="block md:inline py-2 px-4 hover:text-gray-300">
+            <Link to="/login" onClick={() => setMenuOpen(false)} className="block md:inline py-2 px-4 hover:text-gray-300">
               Login
             </Link>
-            <Link to="/signup" className="block md:inline bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+            <Link to="/signup" onClick={() => setMenuOpen(false)} className="block md:inline bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition-colors">
               Signup
             </Link>
           </>
