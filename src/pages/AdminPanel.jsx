@@ -15,6 +15,7 @@ const AdminPanel = () => {
   });
   const [editId, setEditId] = useState(null);
 
+  // Use an absolute URL with a fallback
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
@@ -51,6 +52,7 @@ const AdminPanel = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include" // Add this for cookies/sessions
       });
 
       if (!response.ok) throw new Error("Failed to add event");
@@ -68,6 +70,7 @@ const AdminPanel = () => {
     try {
       const response = await fetch(`${API_URL}/api/events/${id}`, {
         method: "DELETE",
+        credentials: "include" // Add this for cookies/sessions
       });
 
       if (!response.ok) throw new Error("Failed to delete event");
@@ -90,6 +93,7 @@ const AdminPanel = () => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
+        credentials: "include" // Add this for cookies/sessions
       });
 
       if (!response.ok) throw new Error("Failed to update event");
@@ -110,6 +114,7 @@ const AdminPanel = () => {
     try {
       const response = await fetch(`${API_URL}/api/events/${eventId}/registrations/${regId}`, {
         method: "DELETE",
+        credentials: "include" // Add this for cookies/sessions
       });
 
       if (!response.ok) throw new Error("Failed to delete registration");
@@ -130,6 +135,19 @@ const AdminPanel = () => {
 
   const toggleRegistrations = (eventId) => {
     setExpandedEventId(expandedEventId === eventId ? null : eventId);
+  };
+
+  // Function to format date from YYYY-MM-DD to DD-MM-YYYY
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    
+    try {
+      const [year, month, day] = dateString.split('-');
+      return `${day}-${month}-${year}`;
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return dateString; // Return original if there's an error
+    }
   };
 
   if (loading) {
@@ -172,6 +190,19 @@ const AdminPanel = () => {
                   value={formData.image} 
                   onChange={handleChange} 
                 />
+                {formData.image && (
+                  <div className="mt-2 bg-gray-700 rounded-lg p-2 w-32 h-32 overflow-hidden">
+                    <img 
+                      src={formData.image} 
+                      alt="Preview" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://via.placeholder.com/400x300?text=Invalid+Image";
+                      }}
+                    />
+                  </div>
+                )}
               </div>
               
               <div className="md:col-span-2">
@@ -234,12 +265,23 @@ const AdminPanel = () => {
             
             <div className="mt-4">
               {editId ? (
-                <button 
-                  onClick={updateEvent} 
-                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:translate-y-px"
-                >
-                  Update Event
-                </button>
+                <div className="flex gap-3">
+                  <button 
+                    onClick={updateEvent} 
+                    className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:translate-y-px"
+                  >
+                    Update Event
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setEditId(null);
+                      setFormData({ name: "", image: "", description: "", date: "", time: "", location: "", additionalDetails: "" });
+                    }} 
+                    className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:translate-y-px"
+                  >
+                    Cancel
+                  </button>
+                </div>
               ) : (
                 <button 
                   onClick={addEvent} 
@@ -284,7 +326,7 @@ const AdminPanel = () => {
                       
                       <div className="grid grid-cols-2 gap-2 mb-4">
                         <div className="text-gray-400">
-                          <span className="text-gray-500">Date:</span> {event.date}
+                          <span className="text-gray-500">Date:</span> {formatDate(event.date)}
                         </div>
                         <div className="text-gray-400">
                           <span className="text-gray-500">Time:</span> {event.time}
@@ -302,7 +344,11 @@ const AdminPanel = () => {
                           Edit
                         </button>
                         <button 
-                          onClick={() => deleteEvent(event._id)} 
+                          onClick={() => {
+                            if (window.confirm("Are you sure you want to delete this event? This action cannot be undone.")) {
+                              deleteEvent(event._id);
+                            }
+                          }} 
                           className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-all duration-200"
                         >
                           Delete
@@ -342,7 +388,11 @@ const AdminPanel = () => {
                             </div>
                             
                             <button
-                              onClick={() => deleteRegistration(event._id, reg._id)}
+                              onClick={() => {
+                                if (window.confirm("Are you sure you want to delete this registration? This action cannot be undone.")) {
+                                  deleteRegistration(event._id, reg._id);
+                                }
+                              }}
                               className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md transition-all duration-200 text-sm"
                             >
                               Delete Registration
