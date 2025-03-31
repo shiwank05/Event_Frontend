@@ -23,7 +23,7 @@ const Navbar = () => {
         const user = JSON.parse(userStr);
         setIsLoggedIn(true);
         setIsAdmin(user.role === "admin");
-        setUserName(user.fullName || user.email?.split('@')[0] || "User");
+        setUserName(user.fullName || "User");
       } catch (err) {
         console.error("Error parsing user data:", err);
         handleLogout();

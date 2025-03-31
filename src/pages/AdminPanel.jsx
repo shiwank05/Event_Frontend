@@ -52,7 +52,7 @@ const AdminPanel = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-        credentials: "include" // Add this for cookies/sessions
+        credentials: "include" //this for cookies/sessions
       });
 
       if (!response.ok) throw new Error("Failed to add event");
@@ -70,7 +70,7 @@ const AdminPanel = () => {
     try {
       const response = await fetch(`${API_URL}/api/events/${id}`, {
         method: "DELETE",
-        credentials: "include" // Add this for cookies/sessions
+        credentials: "include" //this for cookies/sessions
       });
 
       if (!response.ok) throw new Error("Failed to delete event");
@@ -93,7 +93,7 @@ const AdminPanel = () => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-        credentials: "include" // Add this for cookies/sessions
+        credentials: "include" //this for cookies/sessions
       });
 
       if (!response.ok) throw new Error("Failed to update event");
@@ -114,7 +114,7 @@ const AdminPanel = () => {
     try {
       const response = await fetch(`${API_URL}/api/events/${eventId}/registrations/${regId}`, {
         method: "DELETE",
-        credentials: "include" // Add this for cookies/sessions
+        credentials: "include" //this for cookies/sessions
       });
 
       if (!response.ok) throw new Error("Failed to delete registration");
@@ -146,7 +146,7 @@ const AdminPanel = () => {
       return `${day}-${month}-${year}`;
     } catch (error) {
       console.error("Error formatting date:", error);
-      return dateString; // Return original if there's an error
+      return dateString;
     }
   };
 
