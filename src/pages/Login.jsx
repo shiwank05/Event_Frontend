@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -7,8 +7,12 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+  // Extract redirect path from location state if available
+  const redirectPath = location.state?.redirectTo || "/";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,8 +36,8 @@ const Login = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("currentUser", JSON.stringify(data.user));
 
-      // Navigate based on role
-      navigate("/");
+      // Navigate to the redirect path or home page
+      navigate(redirectPath);
     } catch (err) {
       console.error("Login Error:", err.message);
       setError(err.message);
@@ -46,6 +50,12 @@ const Login = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-900 text-gray-200">
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-96 border border-gray-700">
         <h2 className="text-3xl font-bold text-center mb-6 text-blue-400">Sign In</h2>
+
+        {redirectPath !== "/" && (
+          <div className="bg-blue-900/30 border-l-4 border-blue-500 text-white px-4 py-3 rounded mb-6 shadow-md">
+            Sign in to continue with your registration
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-900/80 border-l-4 border-red-500 text-white px-4 py-3 rounded mb-6 shadow-md">
@@ -67,7 +77,6 @@ const Login = () => {
               placeholder="Enter your email"
               required
             />
-
           </div>
 
           <div className="mb-6">
@@ -83,7 +92,6 @@ const Login = () => {
               placeholder="••••••••"
               required
             />
-
           </div>
 
           <button
