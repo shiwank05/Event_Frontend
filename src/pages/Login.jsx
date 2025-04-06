@@ -11,8 +11,19 @@ const Login = () => {
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-  // Extract redirect path from location state if available
   const redirectPath = location.state?.redirectTo || "/";
+
+  //Disable browser back button when on login page
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const preventBack = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    window.addEventListener("popstate", preventBack);
+    return () => {
+      window.removeEventListener("popstate", preventBack);
+    };
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,12 +43,10 @@ const Login = () => {
         throw new Error(data.message || "Login failed");
       }
 
-      // Store auth data
       localStorage.setItem("token", data.token);
       localStorage.setItem("currentUser", JSON.stringify(data.user));
 
-      // Navigate to the redirect path or home page
-      navigate(redirectPath);
+      navigate(redirectPath, { replace: true }); // ⬅️ use replace to prevent back nav
     } catch (err) {
       console.error("Login Error:", err.message);
       setError(err.message);
@@ -104,7 +113,10 @@ const Login = () => {
         </form>
 
         <p className="text-center mt-6 text-gray-400">
-          Don't have an account? <Link to="/signup" className="text-blue-400 hover:text-blue-300">Create account</Link>
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-400 hover:text-blue-300">
+            Create account
+          </Link>
         </p>
       </div>
     </div>

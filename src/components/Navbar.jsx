@@ -38,6 +38,11 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("currentUser");
+    window.history.pushState(null, "", window.location.href);
+    window.addEventListener("popstate", () => {
+      window.history.pushState(null, "", window.location.href);
+    });
+    navigate("/login", { replace: true });
     setIsLoggedIn(false);
     setIsAdmin(false);
     setMenuOpen(false);
@@ -51,7 +56,7 @@ const Navbar = () => {
         setMenuOpen(false);
       }
     };
-    
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [menuOpen]);
@@ -61,8 +66,8 @@ const Navbar = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             onClick={() => setMenuOpen(false)}
             className="flex items-center"
           >
@@ -75,8 +80,8 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-2">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-200"
             >
               Home
@@ -85,15 +90,15 @@ const Navbar = () => {
             {isLoggedIn ? (
               <>
                 {isAdmin ? (
-                  <Link 
-                    to="/admin-dashboard" 
+                  <Link
+                    to="/admin-dashboard"
                     className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-200"
                   >
                     Admin Panel
                   </Link>
                 ) : (
-                  <Link 
-                    to="/user-dashboard" 
+                  <Link
+                    to="/user-dashboard"
                     className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-200"
                   >
                     Dashboard
@@ -112,14 +117,14 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition-colors duration-200"
                 >
                   Login
                 </Link>
-                <Link 
-                  to="/signup" 
+                <Link
+                  to="/signup"
                   className="ml-1 bg-blue-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Signup
@@ -174,11 +179,11 @@ const Navbar = () => {
                   Dashboard
                 </Link>
               )}
-              
+
               <div className="px-3 py-2 text-gray-300">
                 Hello, {userName}
               </div>
-              
+
               <button
                 onClick={handleLogout}
                 className="w-full text-left px-3 py-2 rounded-md text-base font-medium bg-red-600 text-white hover:bg-red-700 mt-2"
